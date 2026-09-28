@@ -4,7 +4,7 @@ export class BrandService {
 
   static async findAll() {
     return Brand.findAll({
-      order: [["id", "ASC"]],
+      order: [["brandId", "ASC"]],
     });
   }
 
