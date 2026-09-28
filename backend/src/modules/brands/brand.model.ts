@@ -12,7 +12,7 @@ export class Brand extends Model<
   InferAttributes<Brand>,
   InferCreationAttributes<Brand>
 > {
-  declare id: CreationOptional<number>;
+  declare brandId: CreationOptional<number>;
 
   declare name: string;
 
@@ -23,7 +23,7 @@ export class Brand extends Model<
 
 Brand.init(
   {
-    id: {
+    brandId: {
       type: DataTypes.INTEGER.UNSIGNED,
       autoIncrement: true,
       primaryKey: true,

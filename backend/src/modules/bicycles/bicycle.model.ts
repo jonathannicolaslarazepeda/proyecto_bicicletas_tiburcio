@@ -40,7 +40,7 @@ Bicycle.init(
    brandId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      references: {model:"brands", key:"id"},
+      references: {model:"brands", key:"brandId"},
       onUpdate: "CASCADE",
       onDelete: "RESTRICT",
     },
