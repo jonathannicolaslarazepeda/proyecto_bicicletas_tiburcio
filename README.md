@@ -1,54 +1,198 @@
-# Bicycle Shop
+# Bicycle Shop Management System
 
-## Introduction
+A full-stack bicycle shop management application built with **TypeScript**, **React**, **Express**, **Sequelize**, and **MySQL**.
 
-This is a learning project for building a backend API and connecting a frontend to it. Using a bicycle shop as an example, you will learn how to create API endpoints, store data in MySQL, and make HTTP requests from a React interface to create, read, update, and delete bicycles.
+The project is structured as a separate frontend and backend application. The backend exposes a REST API for managing bicycles and brands, while the React frontend provides a user interface for bicycle CRUD operations.
 
-The backend uses TypeScript, Express, and Sequelize. The frontend uses TypeScript, React, and Vite.
+## Project Links
 
-To work through the project as a learning exercise, use the [learning branch](https://github.com/tcrurav/TypeScript-React-Express-Sequelize-Example/tree/learning).
+- **GitHub Repository:** https://github.com/jonathannicolaslarazepeda/proyecto_bicicletas_tiburcio
+- **Postman API Documentation:** https://documenter.getpostman.com/view/58320216/2sBYB4LS3J
 
-**The `learning` branch is not available yet.** The link and cloning instructions below are prepared for when it is published; they will only work once that branch exists.
+## Tech Stack
 
-## Setup and development
+### Frontend
 
-### 1. Prerequisites
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Fetch API
 
-Install Git, Node.js with npm (a version compatible with Vite, such as Node.js 22.12+), and MySQL. Make sure the MySQL server is running before starting the backend.
+### Backend
 
-### 2. Clone the learning branch
+- Node.js
+- Express 5
+- TypeScript
+- Sequelize 6
+- MySQL
+- CORS
+- dotenv
 
-```bash
-git clone --branch learning --single-branch https://github.com/tcrurav/TypeScript-React-Express-Sequelize-Example.git
-cd TypeScript-React-Express-Sequelize-Example
+## Project Structure
+
+```text
+TypeScript-React-Express-Sequelize-Example/
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── middlewares/
+│   │   ├── models/
+│   │   ├── modules/
+│   │   │   ├── bicycles/
+│   │   │   └── brands/
+│   │   ├── routes/
+│   │   ├── app.ts
+│   │   └── server.ts
+│   ├── .env.example
+│   ├── package.json
+│   └── tsconfig.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── features/
+│   │   │   └── bicycles/
+│   │   ├── services/
+│   │   ├── styles/
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   ├── .env.example
+│   ├── package.json
+│   └── vite.config.ts
+│
+└── README.md
 ```
 
-Run the following setup steps from this project directory unless otherwise specified.
+## Features
 
-### 3. Create the database
+### Bicycle Management
 
-Before running either application, create the database and configure both environment files.
+The backend provides endpoints to:
 
-Connect to MySQL using MySQL Workbench or the command-line client:
+- List all bicycles
+- Retrieve a bicycle by ID
+- Retrieve a bicycle together with its brand using eager loading
+- Create a bicycle
+- Update a bicycle
+- Delete a bicycle
 
-```bash
-mysql -u root -p
+Each bicycle contains:
+
+- `id`
+- `brandId`
+- `model`
+- `description`
+- `price`
+- `stock`
+- `createdAt`
+- `updatedAt`
+
+### Brand Management
+
+The API also provides CRUD operations for bicycle brands:
+
+- List all brands
+- Retrieve a brand by ID
+- Create a brand
+- Update a brand
+- Delete a brand
+
+A brand contains:
+
+- `brandId`
+- `name`
+- `createdAt`
+- `updatedAt`
+
+### Database Relationship
+
+The project uses a one-to-many relationship:
+
+```text
+Brand
+  │
+  └─── hasMany ───> Bicycle
+                         │
+                         └─── belongsTo ───> Brand
 ```
 
-Execute this SQL statement:
+The `brandId` field in the `bicycles` table references the `brands` table.
+
+## API Endpoints
+
+The API base URL is:
+
+```text
+http://localhost:3000/api
+```
+
+### Bicycles
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/bicycles` | Get all bicycles |
+| GET | `/bicycles/:id` | Get a bicycle by ID |
+| GET | `/bicycles/eagerly/:id` | Get a bicycle with its brand |
+| POST | `/bicycles` | Create a bicycle |
+| PUT | `/bicycles/:id` | Update a bicycle |
+| DELETE | `/bicycles/:id` | Delete a bicycle |
+
+### Brands
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/brands` | Get all brands |
+| GET | `/brands/:id` | Get a brand by ID |
+| POST | `/brands` | Create a brand |
+| PUT | `/brands/:id` | Update a brand |
+| DELETE | `/brands/:id` | Delete a brand |
+
+For request examples and response details, see the **Postman API Documentation** linked above.
+
+## Prerequisites
+
+Before running the project, make sure you have:
+
+- Git
+- Node.js and npm
+- MySQL Server
+- A MySQL user with permission to create and modify tables
+
+A recent Node.js version compatible with the installed Vite version is recommended.
+
+## Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/jonathannicolaslarazepeda/proyecto_bicicletas_tiburcio.git
+cd proyecto_bicicletas_tiburcio
+```
+
+### 2. Create the MySQL database
+
+Start MySQL and create the database used by the backend:
 
 ```sql
-CREATE DATABASE IF NOT EXISTS dsw_products CHARACTER SET utf8mb4;
+CREATE DATABASE IF NOT EXISTS db_bicycle_shop CHARACTER SET utf8mb4;
 ```
 
-The backend's configured MySQL user must have permission to access this database and create its tables. In the completed implementation, Sequelize creates missing tables when the backend starts; the database itself must already exist.
+The database must exist before starting the backend.
 
-### 4. Configure the backend environment
+### 3. Configure the backend
 
-Create a file named `.env` inside `backend/`:
+Go to the backend directory:
 
-```dotenv
+```bash
+cd backend
+```
+
+Create a `.env` file based on `.env.example`:
+
+```env
 PORT=3000
+
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=db_bicycle_shop
@@ -56,57 +200,244 @@ DB_USER=your-database-username
 DB_PASSWORD=your-database-password
 ```
 
-Replace `DB_USER` and `DB_PASSWORD` with your local MySQL credentials. Adjust the host, port, and database name if your setup differs.
+Replace the database credentials with your local MySQL configuration.
 
-### 5. Configure the frontend environment
+### 4. Install backend dependencies
 
-Create a file named `.env` inside `frontend/`:
+From the `backend` directory:
 
-```dotenv
+```bash
+npm ci
+```
+
+### 5. Configure the frontend
+
+Open another terminal and go to the frontend directory:
+
+```bash
+cd frontend
+```
+
+Create a `.env` file based on `.env.example`:
+
+```env
 VITE_API_URL=http://localhost:3000/api
 ```
 
-This is the backend's base URL. Do not add a trailing slash or `/bicycles`, because the frontend appends endpoint paths itself. If you change the backend port, update this URL as well. Restart the relevant development server after changing an environment file.
+If the backend runs on a different host or port, update this value accordingly.
 
-### 6. Install dependencies
+### 6. Install frontend dependencies
 
-Install dependencies for both applications using their existing lockfiles:
+From the `frontend` directory:
 
 ```bash
-cd backend
 npm ci
-cd ../frontend
-npm ci
-cd ..
 ```
 
-### 7. Start both applications
+## Running the Application
 
-Open two terminals in the project root and keep both running.
+The frontend and backend should be run in separate terminals.
 
-In the first terminal, start the backend:
+### Start the backend
 
 ```bash
 cd backend
 npm run dev
 ```
 
-With the configuration above, the API runs at [http://localhost:3000/api](http://localhost:3000/api), and the bicycle endpoint is [http://localhost:3000/api/bicycles](http://localhost:3000/api/bicycles).
+The API will be available at:
 
-In the second terminal, start the frontend:
+```text
+http://localhost:3000
+```
+
+The API endpoints are available under:
+
+```text
+http://localhost:3000/api
+```
+
+The root endpoint can be used to verify that the API is running:
+
+```text
+GET http://localhost:3000/
+```
+
+Expected response:
+
+```json
+{
+  "message": "API is working"
+}
+```
+
+### Start the frontend
+
+In a second terminal:
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Open the local URL printed by Vite, usually [http://localhost:5173](http://localhost:5173). The frontend sends API requests to the URL configured in `frontend/.env`.
+Vite will display the local development URL, normally:
 
-## Recommended links
+```text
+http://localhost:5173
+```
 
-- [Express documentation](https://expressjs.com/) — routing, middleware, and backend APIs.
-- [Sequelize v6 documentation](https://sequelize.org/docs/v6/) — models and database queries.
-- [MySQL: Creating and selecting a database](https://dev.mysql.com/doc/refman/8.4/en/creating-database.html) — database setup.
-- [React: Quick Start](https://react.dev/learn) — components, state, and events.
-- [Vite: Getting Started](https://vite.dev/guide/) — frontend development tooling and Node.js requirements.
-- [npm ci documentation](https://docs.npmjs.com/cli/v11/commands/npm-ci/) — installing dependencies from a lockfile.
+Open that URL in your browser.
+
+## Production Build
+
+### Backend
+
+Create a TypeScript production build:
+
+```bash
+cd backend
+npm run build
+```
+
+Then start the compiled server:
+
+```bash
+npm start
+```
+
+### Frontend
+
+Create the production build:
+
+```bash
+cd frontend
+npm run build
+```
+
+To preview the generated build locally:
+
+```bash
+npm run preview
+```
+
+## Database Behavior
+
+When the backend starts, Sequelize authenticates the MySQL connection and synchronizes the models with the database.
+
+The current server configuration uses:
+
+```typescript
+sequelize.sync({ force: true })
+```
+
+This recreates the database tables every time the backend starts. **Do not use this configuration in a production environment if you need to preserve existing data.**
+
+## Frontend Architecture
+
+The React application follows a feature-oriented structure.
+
+The bicycle feature includes:
+
+- Components for listing and managing bicycles
+- A bicycle form
+- Create/update modal
+- Delete confirmation modal
+- A custom `useBicycles` hook
+- A service layer for API requests
+- TypeScript types for bicycle data
+
+The frontend communicates with the backend through the configured `VITE_API_URL`.
+
+## Backend Architecture
+
+The backend is organized by responsibility:
+
+```text
+Routes
+  ↓
+Controllers
+  ↓
+Services
+  ↓
+Sequelize Models
+  ↓
+MySQL
+```
+
+- **Routes** define HTTP endpoints.
+- **Controllers** handle requests and responses.
+- **Services** contain database operations and application logic.
+- **Models** define the database structure through Sequelize.
+- **Middlewares** handle errors and unknown routes.
+- **Associations** define relationships between Sequelize models.
+
+## Error Handling
+
+The Express application includes middleware for:
+
+- Unknown routes
+- Application errors
+
+The controllers also return appropriate HTTP status codes for common cases, such as:
+
+- `200 OK` for successful queries and updates
+- `201 Created` for successful creation
+- `204 No Content` for successful deletion
+- `400 Bad Request` for missing required input
+- `404 Not Found` when a requested resource does not exist
+
+## API Documentation
+
+Complete API documentation, including request examples and responses, is available in Postman:
+
+**Postman Documentation:**  
+https://documenter.getpostman.com/view/58320216/2sBYB4LS3J
+
+## Repository
+
+The source code is available on GitHub:
+
+**GitHub Repository:**  
+https://github.com/jonathannicolaslarazepeda/proyecto_bicicletas_tiburcio
+
+## Development Scripts
+
+### Backend
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Starts the backend in development mode with automatic reload |
+| `npm run build` | Compiles TypeScript to JavaScript |
+| `npm start` | Starts the compiled backend |
+
+### Frontend
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Starts the Vite development server |
+| `npm run build` | Type-checks and builds the frontend |
+| `npm run lint` | Runs Oxlint |
+| `npm run preview` | Previews the production build |
+
+## Environment Variables
+
+### Backend
+
+| Variable | Description | Example |
+|---|---|---|
+| `PORT` | Port used by the Express server | `3000` |
+| `DB_HOST` | MySQL server host | `localhost` |
+| `DB_PORT` | MySQL server port | `3306` |
+| `DB_NAME` | MySQL database name | `db_bicycle_shop` |
+| `DB_USER` | MySQL username | `root` |
+| `DB_PASSWORD` | MySQL password | `your-password` |
+
+### Frontend
+
+| Variable | Description | Example |
+|---|---|---|
+| `VITE_API_URL` | Base URL of the backend API | `http://localhost:3000/api` |
+
+## License
+
+This project is currently distributed without a specific open-source license declaration.
