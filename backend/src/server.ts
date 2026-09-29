@@ -1,6 +1,7 @@
 import { app } from "./app";
 import { sequelize } from "./config/database";
 import { env } from "./config/env";
+import { defineAssociations } from "./models/associations";
 
 // Importamos los modelos para que Sequelize los registre.
 import "./modules/bicycles/bicycle.model";
@@ -9,26 +10,28 @@ import "./modules/brands/brand.model"
 async function startServer() {
   try {
 
+    await defineAssociations();
+
     await sequelize.authenticate();
 
-    console.log("Conexión con MySQL establecida.");
+    console.log("MySql connection has been established successfully.");
 
     await sequelize.sync({ force: true }).then(() => {
-      console.log("Datos sincronizados")
+      console.log("Database & tables created!");
     });
 
     //console.log("Modelos sincronizados.");
 
     app.listen(env.PORT, () => {
       console.log(
-        `Servidor funcionando en http://localhost:${env.PORT}`
+        `Server is running at http://localhost:${env.PORT}`
       );
     });
 
   } catch (error) {
 
     console.error(
-      "No se pudo iniciar la aplicación:",
+      "Cannot connect to the database or start the server:",
       error
     );
 

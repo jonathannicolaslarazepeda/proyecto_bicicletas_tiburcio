@@ -3,6 +3,30 @@ import { BicycleService } from "./bicycle.service";
 
 export class BicycleController {
 
+  static async getByEagerlyById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const id = Number(req.params.id);
+
+      const bicycle = await BicycleService.findByEagerlyById(id);
+
+      if (!bicycle) {
+        res.status(404).json({
+          message: "BICICLE NOT FOUND",
+        });
+
+        return;
+      }
+
+      res.json(bicycle);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async getAll(
     req: Request,
     res: Response,
@@ -30,7 +54,7 @@ export class BicycleController {
 
       if (!bicycle) {
         res.status(404).json({
-          message: "Bicicleta no encontrada",
+          message: "BICICLE NOT FOUND",
         });
 
         return;
@@ -54,7 +78,7 @@ export class BicycleController {
 
       if (!brandId || !model || price === undefined) {
         res.status(400).json({
-          message: "brand, model y price son obligatorios",
+          message: "brandId, model and price are required fields",
         });
 
         return;
@@ -88,7 +112,7 @@ export class BicycleController {
 
       if (!bicycle) {
         res.status(404).json({
-          message: "Bicicleta no encontrada",
+          message: "BICICLE NOT FOUND",
         });
 
         return;
@@ -119,7 +143,7 @@ export class BicycleController {
 
       if (!bicycle) {
         res.status(404).json({
-          message: "Bicicleta no encontrada",
+          message: "BICICLE NOT FOUND",
         });
 
         return;
