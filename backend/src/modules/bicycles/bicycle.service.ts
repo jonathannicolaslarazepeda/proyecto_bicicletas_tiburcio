@@ -1,3 +1,4 @@
+import { BicycleDetail } from "../bicycles-details/bicycle-detail.model";
 import { Brand } from "../brands/brand.model";
 import { Bicycle } from "./bicycle.model";
 
@@ -19,6 +20,9 @@ export class BicycleService {
       include: [
         { model: Brand,
           as: 'brand'
+         },
+         {model: BicycleDetail,
+          as: 'details'
          }
         ]
     });
