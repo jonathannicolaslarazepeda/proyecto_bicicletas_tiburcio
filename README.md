@@ -41,6 +41,7 @@ TypeScript-React-Express-Sequelize-Example/
 │   │   ├── modules/
 │   │   │   ├── bicycles/
 │   │   │   └── brands/
+|   |   |   └── bicicles-details/
 │   │   ├── routes/
 │   │   ├── app.ts
 │   │   └── server.ts
@@ -105,6 +106,27 @@ A brand contains:
 - `createdAt`
 - `updatedAt`
 
+### Bicycle Details Management
+
+The backend provides endpoints to:
+
+- List all bicycles details
+- Retrieve a bicycle details by ID
+- Create a bicycle details
+- Update a bicycle details
+- Delete a bicycle details
+
+Each bicycle contains:
+
+- `id`
+- `bicicleId`
+- `frameMaterial`
+- `wheelSize`
+- `weight`
+- `suspension`
+- `createdAt`
+- `updatedAt`
+
 ### Database Relationship
 
 The project uses a one-to-many relationship:
@@ -118,6 +140,18 @@ Brand
 ```
 
 The `brandId` field in the `bicycles` table references the `brands` table.
+
+And a one-to-one relationship:
+
+```text
+Bicycle
+  │
+  └─── hasOne ───> BicycleDetail
+                         │
+                         └─── belongsTo ───> Bicycle
+```
+
+The `BicycleId` field in the `bicycles` table references the `bicycle-details` table.
 
 ## API Endpoints
 
@@ -147,6 +181,16 @@ http://localhost:3000/api
 | POST | `/brands` | Create a brand |
 | PUT | `/brands/:id` | Update a brand |
 | DELETE | `/brands/:id` | Delete a brand |
+
+### Bicycles Details
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/bicycle-details` | Get all brands |
+| GET | `/bicycle-details/:id` | Get a brand by ID |
+| POST | `/bicycle-details` | Create a brand |
+| PUT | `/bicycle-details/:id` | Update a brand |
+| DELETE | `/bicycle-details/:id` | Delete a brand |
 
 For request examples and response details, see the **Postman API Documentation** linked above.
 
