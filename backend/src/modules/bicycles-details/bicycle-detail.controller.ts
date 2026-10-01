@@ -62,7 +62,7 @@ export class BicycleDetailController {
       }
 
       const bicycleDetail = await BicycleDetailService.create({
-        bicycleId,
+        bicycleId:bicycleId,
         frameMaterial,
         wheelSize,
         weight,
