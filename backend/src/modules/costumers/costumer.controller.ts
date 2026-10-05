@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { BrandService } from "./costumer.service";
+import { CostumerService } from "./costumer.service";
 
-export class BrandController {
+export class CostumerController {
 
   static async getAll(
     req: Request,
@@ -9,9 +9,9 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brands = await BrandService.findAll();
+      const costumers = await CostumerService.findAll();
 
-      res.json(brands);
+      res.json(costumers);
     } catch (error) {
       next(error);
     }
@@ -24,19 +24,19 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brandId = Number(req.params.id);
+      const costumerId = Number(req.params.id);
 
-      const brand = await BrandService.findById(brandId);
+      const costumer = await CostumerService.findById(costumerId);
 
-      if (!brand) {
+      if (!costumer) {
         res.status(404).json({
-          message: "brand not found",
+          message: "costumer not found",
         });
 
         return;
       }
 
-      res.json(brand);
+      res.json(costumer);
 
     } catch (error) {
       next(error);
@@ -50,7 +50,7 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const { name } = req.body;
+      const {name, email} = req.body;
 
       if (!name) {
         res.status(400).json({
@@ -60,11 +60,12 @@ export class BrandController {
         return;
       }
 
-      const brand = await BrandService.create({
-        name
+      const costumer = await CostumerService.create({
+        name, 
+        email, 
       });
 
-      res.status(201).json(brand);
+      res.status(201).json(costumer);
 
     } catch (error) {
       next(error);
@@ -78,24 +79,24 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brandId = Number(req.params.id);
+      const costumerId = Number(req.params.id);
 
-      const brand = await BrandService.findById(brandId);
+      const costumer = await CostumerService.findById(costumerId);
 
-      if (!brand) {
+      if (!costumer) {
         res.status(404).json({
-          message: "brand not found",
+          message: "costumer not found",
         });
 
         return;
       }
 
-      const updatedBrand = await BrandService.update(
-        brand,
+      const updatedCostumer = await CostumerService.update(
+        costumer,
         req.body
       );
 
-      res.json(updatedBrand);
+      res.json(updatedCostumer);
 
     } catch (error) {
       next(error);
@@ -109,19 +110,19 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brandId = Number(req.params.id);
+      const costumerId = Number(req.params.id);
 
-      const brand = await BrandService.findById(brandId);
+      const costumer = await CostumerService.findById(costumerId);
 
-      if (!brand) {
+      if (!costumer) {
         res.status(404).json({
-          message: "brand not found",
+          message: "costumer not found",
         });
 
         return;
       }
 
-      await BrandService.delete(brand);
+      await CostumerService.delete(costumer);
 
       res.status(204).send();
 

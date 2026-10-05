@@ -1,37 +1,39 @@
-import { Brand } from "./costumer.model";
+import { Costumer } from "./costumer.model";
 
-export class BrandService {
+export class CostumerService {
 
   static async findAll() {
-    return Brand.findAll({
-      order: [["brandId", "ASC"]],
+    return Costumer.findAll({
+      order: [["id", "ASC"]],
     });
   }
 
 
   static async findById(id: number) {
-    return Brand.findByPk(id);
+    return Costumer.findByPk(id);
   }
 
 
   static async create(data: {
     name: string;
+    email: string;
+  
   }) {
-    return Brand.create(data);
+    return Costumer.create(data);
   }
 
 
   static async update(
-    brand: Brand,
+    costumer: Costumer,
     data: {
       name?: string;
     }
   ) {
-    return brand.update(data);
+    return costumer.update(data);
   }
 
 
-  static async delete(brand: Brand) {
-    await brand.destroy();
+  static async delete(costumer: Costumer) {
+    await costumer.destroy();
   }
 }

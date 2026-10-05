@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { BrandService } from "./order.service";
+import { OrderService } from "./order.service";
+import { Order } from "./order.model";
 
-export class BrandController {
+export class OrderController {
 
   static async getAll(
     req: Request,
@@ -9,9 +10,9 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brands = await BrandService.findAll();
+      const orders = await OrderService.findAll();
 
-      res.json(brands);
+      res.json(orders);
     } catch (error) {
       next(error);
     }
@@ -24,19 +25,19 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brandId = Number(req.params.id);
+      const orderId = Number(req.params.id);
 
-      const brand = await BrandService.findById(brandId);
+      const order = await OrderService.findById(orderId);
 
-      if (!brand) {
+      if (!order) {
         res.status(404).json({
-          message: "brand not found",
+          message: "order not found",
         });
 
         return;
       }
 
-      res.json(brand);
+      res.json(order);
 
     } catch (error) {
       next(error);
@@ -50,21 +51,23 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const { name } = req.body;
+      const { customerId, orderDate, status } = req.body;
 
-      if (!name) {
+      if (!customerId) {
         res.status(400).json({
-          message: "name is a required field",
+          message: "customerId is a required field",
         });
 
         return;
       }
 
-      const brand = await BrandService.create({
-        name
+      const order = await OrderService.create({
+        customerId,
+        orderDate,
+        status
       });
 
-      res.status(201).json(brand);
+      res.status(201).json(order);
 
     } catch (error) {
       next(error);
@@ -78,24 +81,24 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brandId = Number(req.params.id);
+      const orderId = Number(req.params.id);
 
-      const brand = await BrandService.findById(brandId);
+      const order = await OrderService.findById(orderId);
 
-      if (!brand) {
+      if (!order) {
         res.status(404).json({
-          message: "brand not found",
+          message: "order not found",
         });
 
         return;
       }
 
-      const updatedBrand = await BrandService.update(
-        brand,
+      const updatedOrder = await OrderService.update(
+        order,
         req.body
       );
 
-      res.json(updatedBrand);
+      res.json(updatedOrder);
 
     } catch (error) {
       next(error);
@@ -109,19 +112,19 @@ export class BrandController {
     next: NextFunction
   ) {
     try {
-      const brandId = Number(req.params.id);
+      const orderId = Number(req.params.id);
 
-      const brand = await BrandService.findById(brandId);
+      const order = await OrderService.findById(orderId);
 
-      if (!brand) {
+      if (!order) {
         res.status(404).json({
-          message: "brand not found",
+          message: "order not found",
         });
 
         return;
       }
 
-      await BrandService.delete(brand);
+      await OrderService.delete(order);
 
       res.status(204).send();
 

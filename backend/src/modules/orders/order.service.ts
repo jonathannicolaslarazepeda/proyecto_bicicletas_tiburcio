@@ -1,37 +1,41 @@
-import { Brand } from "./order.model";
+import { Order } from "./order.model";
 
 export class OrderService {
 
   static async findAll() {
-    return Brand.findAll({
-      order: [["brandId", "ASC"]],
+    return Order.findAll({
+      order: [["customerId", "ASC"]],
     });
   }
 
 
   static async findById(id: number) {
-    return Brand.findByPk(id);
+    return Order.findByPk(id);
   }
 
 
   static async create(data: {
-    name: string;
+    customerId: string;
+    orderDate?: Date;
+    status?: "pending" | "paid" | "shipped" | "cancelled";
   }) {
-    return Brand.create(data);
+    return Order.create(data);
   }
 
 
   static async update(
-    brand: Brand,
+    order: Order,
     data: {
-      name?: string;
+      customerId?: string;
+      orderDate?: Date;
+      status?: "pending" | "paid" | "shipped" | "cancelled";
     }
   ) {
-    return brand.update(data);
+    return order.update(data);
   }
 
 
-  static async delete(brand: Brand) {
-    await brand.destroy();
+  static async delete(order: Order) {
+    await order.destroy();
   }
 }

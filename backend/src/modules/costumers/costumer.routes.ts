@@ -1,16 +1,16 @@
 import { Router } from "express";
-import { BrandController } from "./costumer.controller";
+import { CostumerController } from "./costumer.controller";
 
 const router = Router();
 
-router.get("/", BrandController.getAll);
+router.get("/", CostumerController.getAll);
 
-router.get("/:id", BrandController.getById);
+router.get("/:id", CostumerController.getById);
 
-router.post("/", BrandController.create);
+router.post("/", CostumerController.create);
 
-router.put("/:id", BrandController.update);
+router.put("/:id", CostumerController.update);
 
-router.delete("/:id", BrandController.delete);
+router.delete("/:id", CostumerController.delete);
 
 export default router;
