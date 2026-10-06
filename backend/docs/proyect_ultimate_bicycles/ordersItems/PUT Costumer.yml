@@ -1,20 +1,17 @@
 info:
-  name: PUT Bicycle
+  name: PUT Costumer
   type: http
-  seq: 3
+  seq: 4
 
 http:
   method: PUT
-  url: http://localhost:3000/api/bicycles/2
+  url: http://localhost:3000/api/orders/1
   body:
     type: json
     data: |-
       {
-        "brand": "1",
-        "model": "Sky",
-        "description": "Great for any occassion",
-        "price": 189.99,
-        "stock": 0
+        "name": "Pepa Pig",
+        "email": "LaPepa@hotmail.com"
       }
   auth: inherit
 

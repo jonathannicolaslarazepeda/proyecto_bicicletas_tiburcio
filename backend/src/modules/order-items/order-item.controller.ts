@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { OrderItemService } from "./order-item.service";
-import { OrderItem } from "./order-item.model";
+
 
 export class OrderItemController {
 
@@ -51,11 +51,11 @@ export class OrderItemController {
     next: NextFunction
   ) {
     try {
-      const { customerId, orderDate, status } = req.body;
+      const { orderId, bicycleId, quantity, unitPrice } = req.body;
 
-      if (!customerId) {
+      if (!orderId || !bicycleId || !quantity || !unitPrice) {
         res.status(400).json({
-          message: "customerId is a required field",
+          message: "All fields are required: orderId, bicycleId, quantity, unitPrice",
         });
 
         return;

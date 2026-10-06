@@ -1,11 +1,11 @@
 info:
-  name: GET ALL Bicycle
+  name: DELETE Costumer
   type: http
-  seq: 1
+  seq: 5
 
 http:
-  method: GET
-  url: http://localhost:3000/api/bicycles
+  method: DELETE
+  url: http://localhost:3000/api/orders/1
   auth: inherit
 
 settings:
