@@ -42,6 +42,8 @@ TypeScript-React-Express-Sequelize-Example/
 │   │   │   ├── bicycles/
 │   │   │   └── brands/
 |   |   |   └── bicicles-details/
+│   │   │   ├── customers/
+│   │   │   └── orders/
 │   │   ├── routes/
 │   │   ├── app.ts
 │   │   └── server.ts
@@ -127,6 +129,44 @@ Each bicycle contains:
 - `createdAt`
 - `updatedAt`
 
+### Customers Management
+
+The backend provides endpoints to:
+
+- List all customers
+- Retrieve a customer by ID
+- Create a customer
+- Update a customer
+- Delete a customer
+
+Each bicycle contains:
+
+- `id`
+- `name`
+- `email`
+- `createdAt`
+- `updatedAt`
+
+
+### Orders Management
+
+The backend provides endpoints to:
+
+- List all Orders
+- Retrieve a order by ID
+- Create a order
+- Update a order
+- Delete a order
+
+Each bicycle contains:
+
+- `id`
+- `customerId`
+- `orderDate`
+- `status`
+- `createdAt`
+- `updatedAt`
+
 ### Database Relationship
 
 The project uses a one-to-many relationship:
@@ -152,6 +192,22 @@ Bicycle
 ```
 
 The `BicycleId` field in the `bicycles` table references the `bicycle-details` table.
+
+
+The `brandId` field in the `bicycles` table references the `brands` table.
+
+And a one-to-one relationship:
+
+```text
+Bicycle
+  │
+  └─── hasOne ───> BicycleDetail
+                         │
+                         └─── belongsTo ───> Bicycle
+```
+
+The `BicycleId` field in the `bicycles` table references the `bicycle-details` table.
+
 
 ## API Endpoints
 
@@ -189,6 +245,26 @@ http://localhost:3000/api
 | GET | `/bicycle-details` | Get all brands |
 | GET | `/bicycle-details/:id` | Get a brand by ID |
 | POST | `/bicycle-details` | Create a brand |
+| PUT | `/bicycle-details/:id` | Update a brand |
+| DELETE | `/bicycle-details/:id` | Delete a brand |
+
+### Customer
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/customers` | Get all brands |
+| GET | `/customers/:id` | Get a brand by ID |
+| POST | `/customers` | Create a brand |
+| PUT | `/customers/:id` | Update a brand |
+| DELETE | `/customers/:id` | Delete a brand |
+
+### Orders Details
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/orders` | Get all brands |
+| GET | `/orders/:id` | Get a brand by ID |
+| POST | `/orders` | Create a brand |
 | PUT | `/bicycle-details/:id` | Update a brand |
 | DELETE | `/bicycle-details/:id` | Delete a brand |
 
