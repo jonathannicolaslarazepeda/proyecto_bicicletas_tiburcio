@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import { CostumerService } from "./costumer.service";
+import { CustomerService } from "./customer.service";
 
-export class CostumerController {
+export class CustomerController {
 
   static async getAll(
     req: Request,
@@ -9,9 +9,9 @@ export class CostumerController {
     next: NextFunction
   ) {
     try {
-      const costumers = await CostumerService.findAll();
+      const customers = await CustomerService.findAll();
 
-      res.json(costumers);
+      res.json(customers);
     } catch (error) {
       next(error);
     }
@@ -24,19 +24,19 @@ export class CostumerController {
     next: NextFunction
   ) {
     try {
-      const costumerId = Number(req.params.id);
+      const customerId = Number(req.params.id);
 
-      const costumer = await CostumerService.findById(costumerId);
+      const customer = await CustomerService.findById(customerId);
 
-      if (!costumer) {
+      if (!customer) {
         res.status(404).json({
-          message: "costumer not found",
+          message: "customer not found",
         });
 
         return;
       }
 
-      res.json(costumer);
+      res.json(customer);
 
     } catch (error) {
       next(error);
@@ -60,12 +60,12 @@ export class CostumerController {
         return;
       }
 
-      const costumer = await CostumerService.create({
+      const customer = await CustomerService.create({
         name, 
         email, 
       });
 
-      res.status(201).json(costumer);
+      res.status(201).json(customer);
 
     } catch (error) {
       next(error);
@@ -79,24 +79,24 @@ export class CostumerController {
     next: NextFunction
   ) {
     try {
-      const costumerId = Number(req.params.id);
+      const customerId = Number(req.params.id);
 
-      const costumer = await CostumerService.findById(costumerId);
+      const customer = await CustomerService.findById(customerId);
 
-      if (!costumer) {
+      if (!customer) {
         res.status(404).json({
-          message: "costumer not found",
+          message: "customer not found",
         });
 
         return;
       }
 
-      const updatedCostumer = await CostumerService.update(
-        costumer,
+      const updatedCustomer = await CustomerService.update(
+        customer,
         req.body
       );
 
-      res.json(updatedCostumer);
+      res.json(updatedCustomer);
 
     } catch (error) {
       next(error);
@@ -110,19 +110,19 @@ export class CostumerController {
     next: NextFunction
   ) {
     try {
-      const costumerId = Number(req.params.id);
+      const customerId = Number(req.params.id);
 
-      const costumer = await CostumerService.findById(costumerId);
+      const customer = await CustomerService.findById(customerId);
 
-      if (!costumer) {
+      if (!customer) {
         res.status(404).json({
-          message: "costumer not found",
+          message: "customer not found",
         });
 
         return;
       }
 
-      await CostumerService.delete(costumer);
+      await CustomerService.delete(customer);
 
       res.status(204).send();
 

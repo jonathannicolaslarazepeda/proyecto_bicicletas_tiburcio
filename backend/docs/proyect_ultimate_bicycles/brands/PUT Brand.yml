@@ -1,0 +1,31 @@
+info:
+  name: PUT Brand
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: http://localhost:3000/api/bicycles/2
+  body:
+    type: json
+    data: "{\r
+
+      \  \"brand\": \"Orbea\",\r
+
+      \  \"model\": \"Sky\",\r
+
+      \  \"description\": \"Great for any occassion\",\r
+
+      \  \"price\": 189.99,\r
+
+      \  \"stock\": 0\r
+
+      }"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

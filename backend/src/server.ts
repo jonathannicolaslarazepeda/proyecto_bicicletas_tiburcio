@@ -7,7 +7,7 @@ import { defineAssociations } from "./models/associations";
 import "./modules/bicycles/bicycle.model";
 import "./modules/brands/brand.model"
 import "./modules/bicycles-details/bicycle-detail.model";
-import "./modules/costumers/costumer.model";
+import "./modules/customers/customer.model";
 import "./modules/orders/order.model";
 
 async function startServer() {

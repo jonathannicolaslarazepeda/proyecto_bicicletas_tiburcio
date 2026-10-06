@@ -8,9 +8,9 @@ import {
 
 import { sequelize } from "../../config/database";
 
-export class Costumer extends Model<
-  InferAttributes<Costumer>,
-  InferCreationAttributes<Costumer>
+export class Customer extends Model<
+  InferAttributes<Customer>,
+  InferCreationAttributes<Customer>
 > {
   declare id: CreationOptional<number>;
 
@@ -23,7 +23,7 @@ export class Costumer extends Model<
   declare updatedAt: CreationOptional<Date>;
 }
 
-Costumer.init(
+Customer.init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,
@@ -50,8 +50,8 @@ Costumer.init(
   {
     sequelize,
 
-    tableName: "costumers",
-    modelName: "Costumer",
+    tableName: "customers",
+    modelName: "Customer ",
     timestamps: true,
   }
 );
