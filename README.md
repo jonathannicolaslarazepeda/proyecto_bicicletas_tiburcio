@@ -194,19 +194,19 @@ Bicycle
 The `BicycleId` field in the `bicycles` table references the `bicycle-details` table.
 
 
-The `brandId` field in the `bicycles` table references the `brands` table.
+The `customerId` field in the `orders` table references the `customer` table.
 
 And a one-to-one relationship:
 
 ```text
-Bicycle
+Customer
   │
-  └─── hasOne ───> BicycleDetail
+  └─── hasMany ───> Orders
                          │
-                         └─── belongsTo ───> Bicycle
+                         └─── belongsTo ───> Customer
 ```
 
-The `BicycleId` field in the `bicycles` table references the `bicycle-details` table.
+The `customerId` field in the `customer` table references the `orders` table.
 
 
 ## API Endpoints
@@ -265,8 +265,8 @@ http://localhost:3000/api
 | GET | `/orders` | Get all brands |
 | GET | `/orders/:id` | Get a brand by ID |
 | POST | `/orders` | Create a brand |
-| PUT | `/bicycle-details/:id` | Update a brand |
-| DELETE | `/bicycle-details/:id` | Delete a brand |
+| PUT | `/orders/:id` | Update a brand |
+| DELETE | `/orders/:id` | Delete a brand |
 
 For request examples and response details, see the **Postman API Documentation** linked above.
 
