@@ -38,10 +38,16 @@ OrderItem.init(
     orderId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      references: {model:"Order", key:"orderId"},
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
     },
     bicycleId: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
+      references: {model:"Bicycle", key:"bicycleId"},
+      onUpdate: "CASCADE",
+      onDelete: "RESTRICT",
     },
     quantity: {
       type: DataTypes.INTEGER.UNSIGNED,

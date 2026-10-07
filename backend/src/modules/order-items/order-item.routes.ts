@@ -7,6 +7,8 @@ router.get("/", OrderItemController.getAll);
 
 router.get("/:id", OrderItemController.getById);
 
+router.get("/eagerly/:id", OrderItemController.getByEagerlyById);
+
 router.post("/", OrderItemController.create);
 
 router.put("/:id", OrderItemController.update);

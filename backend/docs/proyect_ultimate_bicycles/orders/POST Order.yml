@@ -1,5 +1,5 @@
 info:
-  name: POST Costumer
+  name: POST Order
   type: http
   seq: 2
 

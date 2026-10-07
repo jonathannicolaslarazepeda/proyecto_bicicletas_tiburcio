@@ -1,17 +1,19 @@
 info:
-  name: PUT Costumer
+  name: PUT OrderItem
   type: http
-  seq: 3
+  seq: 4
 
 http:
   method: PUT
-  url: http://localhost:3000/api/orders/1
+  url: http://localhost:3000/api/order-items/2
   body:
     type: json
     data: |-
       {
-        "name": "Pepa Pig",
-        "email": "LaPepa@hotmail.com"
+        "orderId": 1 ,
+        "bicycleId": 1 ,
+        "quantity": 2,
+        "unitPrice": 10.19
       }
   auth: inherit
 

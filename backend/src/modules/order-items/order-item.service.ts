@@ -1,3 +1,5 @@
+import { Bicycle } from "../bicycles/bicycle.model";
+import { Order } from "../orders/order.model";
 import { OrderItem } from "./order-item.model";
 
 export class OrderItemService {
@@ -13,6 +15,18 @@ export class OrderItemService {
     return OrderItem.findByPk(id);
   }
 
+static async findByEagerlyById(id: number) {
+    return OrderItem.findByPk(id, {
+      include: [
+        { model: Order,
+          as: 'order'
+         },
+         {model: Bicycle,
+          as: 'bicycle'
+         }
+        ]
+    });
+  }
 
   static async create(data: {
     orderId: number;

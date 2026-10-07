@@ -18,6 +18,29 @@ export class OrderItemController {
     }
   }
 
+static async getByEagerlyById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const id = Number(req.params.id);
+
+      const orderItem = await OrderItemService.findByEagerlyById(id);
+
+      if (!orderItem) {
+        res.status(404).json({
+          message: "ORDER ITEM NOT FOUND",
+        });
+
+        return;
+      }
+
+      res.json(orderItem);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async getById(
     req: Request,

@@ -44,6 +44,7 @@ TypeScript-React-Express-Sequelize-Example/
 |   |   |   └── bicicles-details/
 │   │   │   ├── customers/
 │   │   │   └── orders/
+│   │   │   └── order-items/
 │   │   ├── routes/
 │   │   ├── app.ts
 │   │   └── server.ts
@@ -167,47 +168,78 @@ Each bicycle contains:
 - `createdAt`
 - `updatedAt`
 
+### OrderItems Management
+
+The backend provides endpoints to:
+
+- List all OrderItems
+- Retrieve a orderItems by ID
+- Retrieve a orderItem together with its bicycle and order using eager loading
+- Create a orderItem
+- Update a orderItem
+- Delete a orderItem
+
+Each OrderItem contains:
+
+- `id`
+- `orderId`
+- `bicycleId`
+- `quantity`
+- `unitPrice`
+- `createdAt`
+- `updatedAt`
+
 ### Database Relationship
 
-The project uses a one-to-many relationship:
+```mermaid
+erDiagram
+    Brand ||--o{ Bicycle : "hasMany"
+    Bicycle }o--|| Brand : "belongsTo"
 
-```text
-Brand
-  │
-  └─── hasMany ───> Bicycle
-                         │
-                         └─── belongsTo ───> Brand
+    Bicycle ||--|| BicycleDetail : "hasOne"
+    BicycleDetail }o--|| Bicycle : "belongsTo"
+
+    Customer ||--o{ Order : "hasMany"
+    Order }o--|| Customer : "belongsTo"
+
+    Order ||--o{ OrderItem : "hasMany"
+    OrderItem }o--|| Order : "belongsTo"
+
+    Bicycle ||--o{ OrderItem : "hasMany"
+    OrderItem }o--|| Bicycle : "belongsTo"
+
+    Order }o--o{ Bicycle : "belongsToMany"
+    Bicycle }o--o{ Order : "belongsToMany"
+
+    Brand {
+        int id PK
+    }
+
+    Bicycle {
+        int id PK
+        int brandId FK
+    }
+
+    BicycleDetail {
+        int id PK
+        int bicycleId FK
+    }
+
+    Customer {
+        int id PK
+    }
+
+    Order {
+        int id PK
+        int customerId FK
+    }
+
+    OrderItem {
+        int id PK
+        int orderId FK
+        int bicycleId FK
+    }
 ```
-
-The `brandId` field in the `bicycles` table references the `brands` table.
-
-And a one-to-one relationship:
-
-```text
-Bicycle
-  │
-  └─── hasOne ───> BicycleDetail
-                         │
-                         └─── belongsTo ───> Bicycle
-```
-
-The `BicycleId` field in the `bicycles` table references the `bicycle-details` table.
-
-
-The `customerId` field in the `orders` table references the `customer` table.
-
-And a one-to-one relationship:
-
-```text
-Customer
-  │
-  └─── hasMany ───> Orders
-                         │
-                         └─── belongsTo ───> Customer
-```
-
-The `customerId` field in the `customer` table references the `orders` table.
-
 
 ## API Endpoints
 
